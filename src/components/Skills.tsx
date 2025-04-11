@@ -42,89 +42,47 @@ const SkillsGrid = styled('div')({
   maxWidth: '1200px',
   margin: '0 auto',
   display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-  gap: '2rem',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+  gap: '1.5rem',
+  perspective: '1000px',
 });
 
 const SkillCard = styled(motion.div)(({ theme }) => ({
   background: theme.palette.background.default,
-  padding: '2rem',
-  borderRadius: '10px',
-  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-}));
-
-const SkillTitle = styled('h3')(({ theme }) => ({
-  color: theme.palette.text.primary,
-  marginBottom: '1.5rem',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.5rem',
-}));
-
-const ProgressBar = styled(motion.div)(({ theme }) => ({
-  height: '8px',
-  background: 'rgba(255, 255, 255, 0.1)',
-  borderRadius: '4px',
-  overflow: 'hidden',
-  marginBottom: '1rem',
-}));
-
-const ProgressFill = styled(motion.div)(({ theme }) => ({
-  height: '100%',
-  background: theme.palette.primary.main,
-  borderRadius: '4px',
-}));
-
-const SkillName = styled('span')(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  fontSize: '0.9rem',
-}));
-
-const SkillItem = styled(motion.div)(({ theme }) => ({
-  background: theme.palette.background.default,
-  padding: '2rem',
-  borderRadius: '10px',
-  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+  padding: '1.5rem 1rem',
+  borderRadius: '12px',
+  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  textAlign: 'center',
+  transition: 'all 0.3s ease',
+  border: `1px solid ${theme.palette.divider}`,
 }));
 
-const SkillIcon = styled('div')({
+const SkillIcon = styled(motion.div)({
   marginBottom: '1rem',
+  transformStyle: 'preserve-3d',
 });
 
-const SkillLevel = styled('div')({
-  width: '100%',
-  height: '8px',
-  background: 'rgba(255, 255, 255, 0.1)',
-  borderRadius: '4px',
-  overflow: 'hidden',
-});
-
-interface SkillLevelBarProps {
-  level: number;
-}
-
-const SkillLevelBar = styled(motion.div)<SkillLevelBarProps>`
-  height: 100%;
-  background: #00f2fe;
-  border-radius: 4px;
-  width: ${props => props.level}%;
-`;
+const SkillName = styled('h4')(({ theme }) => ({
+  color: theme.palette.text.primary,
+  fontSize: '1rem',
+  fontWeight: 500,
+}));
 
 const skills = [
-  { name: 'React', icon: FaReact, level: 90 },
-  { name: 'Node.js', icon: FaNodeJs, level: 85 },
-  { name: 'MongoDB', icon: SiMongodb, level: 80 },
-  { name: 'Express.js', icon: SiExpress, level: 85 },
-  { name: 'HTML5', icon: FaHtml5, level: 95 },
-  { name: 'CSS3', icon: FaCss3Alt, level: 90 },
-  { name: 'JavaScript', icon: FaJs, level: 90 },
-  { name: 'TypeScript', icon: SiTypescript, level: 80 },
-  { name: 'Git', icon: FaGitAlt, level: 85 },
-  { name: 'GitHub', icon: FaGithub, level: 85 },
-  { name: 'Docker', icon: FaDocker, level: 70 },
+  { name: 'React', icon: FaReact },
+  { name: 'Node.js', icon: FaNodeJs },
+  { name: 'MongoDB', icon: SiMongodb },
+  { name: 'Express', icon: SiExpress },
+  { name: 'HTML5', icon: FaHtml5 },
+  { name: 'CSS3', icon: FaCss3Alt },
+  { name: 'JavaScript', icon: FaJs },
+  { name: 'TypeScript', icon: SiTypescript },
+  { name: 'Git', icon: FaGitAlt },
+  { name: 'GitHub', icon: FaGithub },
+  { name: 'Docker', icon: FaDocker },
 ];
 
 const Skills: React.FC = () => {
@@ -144,24 +102,32 @@ const Skills: React.FC = () => {
       </SectionTitle>
       <SkillsGrid>
         {skills.map((skill, index) => (
-          <SkillItem
+          <SkillCard
             key={skill.name}
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: index * 0.1 }}
+            whileHover={{
+              y: -5,
+              rotateY: 5,
+              boxShadow: '0 8px 15px rgba(0, 0, 0, 0.1)',
+            }}
           >
-            <SkillIcon>
-              <IconWrapper icon={skill.icon} size={40} color="#00f2fe" />
+            <SkillIcon
+              whileHover={{
+                scale: 1.2,
+                rotate: [0, 10, -10, 0],
+                transition: { duration: 0.7 },
+              }}
+            >
+              <IconWrapper icon={skill.icon} size={36} />
             </SkillIcon>
             <SkillName>{skill.name}</SkillName>
-            <SkillLevel>
-              <SkillLevelBar level={skill.level} />
-            </SkillLevel>
-          </SkillItem>
+          </SkillCard>
         ))}
       </SkillsGrid>
     </SkillsSection>
   );
 };
 
-export default Skills; 
+export default Skills;

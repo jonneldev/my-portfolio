@@ -103,6 +103,7 @@ const projects = [
     title: 'E-commerce Platform',
     description: 'A full-stack e-commerce platform built with MERN stack.',
     image: '/images/ecommerce.png',
+    tech: ['React', 'Node.js', 'MongoDB', 'Express'],
     github: 'https://github.com/jonneldosado/ecommerce',
     live: 'https://ecommerce.jonneldosado.com',
   },
@@ -110,6 +111,7 @@ const projects = [
     title: 'Task Management App',
     description: 'A task management application with real-time updates.',
     image: '/images/taskmanager.png',
+    tech: ['React', 'Firebase', 'Redux', 'Material UI'],
     github: 'https://github.com/jonneldosado/taskmanager',
     live: 'https://taskmanager.jonneldosado.com',
   },
@@ -139,26 +141,29 @@ const Projects: React.FC = () => {
             transition={{ duration: 0.5, delay: index * 0.2 }}
             whileHover={{ y: -5 }}
           >
-            <ProjectImage
-              style={{ backgroundImage: `url(${project.image})` }}
-            />
+            <ProjectImage style={{ backgroundImage: `url(${project.image})` }} />
             <ProjectContent>
               <ProjectTitle>{project.title}</ProjectTitle>
               <ProjectDescription>{project.description}</ProjectDescription>
+              <ProjectTech>
+                {project.tech.map((tech) => (
+                  <TechTag key={tech}>{tech}</TechTag>
+                ))}
+              </ProjectTech>
               <ProjectLinks>
                 <ProjectLink
                   href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <IconWrapper icon={FaGithub} size={24} color="#fff" />
+                  <IconWrapper icon={FaGithub} size={24} />
                 </ProjectLink>
                 <ProjectLink
                   href={project.live}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <IconWrapper icon={FaExternalLinkAlt} size={24} color="#fff" />
+                  <IconWrapper icon={FaExternalLinkAlt} size={24} />
                 </ProjectLink>
               </ProjectLinks>
             </ProjectContent>
